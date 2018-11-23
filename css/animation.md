@@ -126,6 +126,8 @@ ps: @keyframes只是定义了一个动画效果，但是要使动画生效，必
 量外也可以同时指定多个动画效果，例如 animation: moveten1 1s ease .5s,moveten2 2s ease 1s forwards;
 
 
+text-decoration: alternate 表示动画会在奇数次数(1,3,5等等)正常播放，而在（2，4，6等等）向后播放。 
+
 
 
 
