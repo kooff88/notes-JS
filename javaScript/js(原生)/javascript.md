@@ -15,6 +15,7 @@
 - [generator函数](#generator函数)
 - [Object.entries()](#Object.entries())
 - [Infinity属性](#Infinity属性)
+- [获取map格式数据键值对](#获取map格式数据键值对)
 
 ## Promise(es6)
 
@@ -265,6 +266,45 @@ a = Object.entries({ name: 'li', age: 26 });  // [ ["name","li"], ["age": 26] ]
   </script>
 
 ```
+
+## 获取map格式数据键值对
+
+
+```
+  var dxy = {
+    pageUrl : { 
+      menu      :  "loadPage.htm?url=/collect/menu.page",     // 进入菜单页面 
+      guangfaPage   :  "loadPage.htm?url=/collect/menu.page",     // 进入广发信息收集页面 
+      pinganPage   :  "loadPage.htm?url=/collect/menu.page",     // 进入平安信息收集页面 
+      nuonuoPage   :  "loadPage.htm?url=/collect/menu.page",     // 进入诺诺信息收集页面 
+      youbangPage   :  "loadPage.htm?url=/collect/menu.page",     // 进入友邦信息收集页面 
+      inputMobileNo : "loadPage.htm?url=/collect/inputMobileNo.page",  // 进入输入手机号页面 
+      readIdCard   : "loadPage.htm?url=/collect/readIdCard.page",    // 进入读取身份证页面 
+      member     : "loadPage.htm?url=/collect/member.page",      // 进入输入会员卡号页面 
+      bankCard    : "loadPage.htm?url=/collect/bankCard.page",     // 进入插入银行卡页面 
+      url      : "loadPage.htm?url=/collect/url.page"        // 进入跳转url页面 
+    } 
+  }
+
+  var arr = []
+  for (var key in dxy.pageUrl ) {
+    arr.push({ name: key, value: dxy.pageUrl[key] })
+  }
+  console.log('arr',arr)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
