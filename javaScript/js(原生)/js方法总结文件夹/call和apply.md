@@ -1,5 +1,10 @@
 # call 和  apply
 
+-[区别](#区别)  
+-[将参数转为一个数组](#将参数转为一个数组)  
+
+## 区别
+
 1. 每个函数都包含两个非继承来的方法： call()方法和 apply()方法。  
 2. 相同点： 这两个方法的作用是一样的。  
 
@@ -162,3 +167,25 @@
 
 	</script>
 ```
+
+## 将参数转为一个数组
+
+```
+	function test(){
+		// 将参数转为一个数组
+		var args = Array.prototype.slice.apply(arguments);
+		return args;
+	}
+
+	test(22,33,'test')   //[22,33,'test']
+
+```
+
+
+
+
+
+
+
+
+
