@@ -10,7 +10,7 @@
 ```
 例子:
 
-取(2 - 9)之间随机数
+取(2 - 10)之间随机数
 
 var num = Math.floor(Math.random() * 9 + 2);
 
