@@ -16,7 +16,8 @@ const Info: React.FC<{}> = props => {
     const gotoSomePage = () =>{
         history.push({
             pathname: "/otherpage",
-            query:{ params:100 }
+            query:{ params:100 }, // 地址栏展示 传参
+            state:{ params:200 }  // 地址栏不展示 传参
         });
     }
 
