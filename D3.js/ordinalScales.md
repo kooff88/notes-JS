@@ -6,5 +6,9 @@
 
 `band.align`: 前面创建比例尺的 位置范围。
 
-`band.domain`: 前面比例尺的 范围。 域。
+`band.rangeRound`: 比例尺 值范围。
+
+`band.paddingInner`: 柱状图 柱之间距离
+
+`band.paddingInner`: 柱状图 柱之间距离 和 外部距离
 
