@@ -26,3 +26,16 @@ v.dir = function () {
 v.x = v.length * Math.cos(v.dir);
 v.y = v.length * Math.sin(v.dir);
 ```
+
+
+
+### Math.pow()
+
+pow() 方法可以返回 x 的 y 次幂的值。
+
+语法:
+
+Math.pow(x, y);
+
+x: 必需。底数。number.   
+y: 必需。幂数。number.  
