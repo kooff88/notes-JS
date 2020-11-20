@@ -13,3 +13,21 @@
 `slection.datum`: 将指定数据赋值给被选择元素(覆盖)
 
 `slection.data`: 将数据组合与选择的元素结合(集合操作)
+
+`selection.call`: 将当前选择结点传入 某方法中。
+```js
+function name(selection, first, last) {
+  selection
+      .attr("first-name", first)
+      .attr("last-name", last);
+}
+
+// 式子1:
+ d3.selectAll("div").call(name, "John", "Snow");
+
+// 式子2:
+ name(d3.selectAll("div"), "John", "Snow");
+
+// 式子1 等价于 式子2
+
+```
