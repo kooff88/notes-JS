@@ -11,3 +11,10 @@
 
 
 `d3.nice`: 改变函数的domain, 能自动把 0.00000000000001 变为最接近它的 0 ， 9.999999991 变为最接近它的 10 
+
+`selection.transition `: 给一个选中的元素设置一个过渡。
+
+`transition.duration`: 过渡状态持续时间。
+
+`transition.delay`: 延迟 一定时间 后执行。
+ 
