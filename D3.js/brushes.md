@@ -10,3 +10,7 @@
 
 `brush.extend`: 定义刷子的范围
 
+`brush.move`: 定义刷子范围 group设置选中范围,
+
+
+
