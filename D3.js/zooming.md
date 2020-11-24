@@ -11,3 +11,9 @@ let svg = d3.select("body")
 		}))
 
 ```
+
+`zoom.scaleExtent` : 设置一个映射范围。
+
+`zoom.translateExtend`: 设置 转换的 总范围。
+
+`zoom.extent`: 设置 可视范围一个值。
