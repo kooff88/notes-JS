@@ -17,4 +17,10 @@
 `transition.duration`: 过渡状态持续时间。
 
 `transition.delay`: 延迟 一定时间 后执行。
- 
+
+`d3.ease` : 扭曲时间控制动画中的运动的方法，是动画过渡更加平滑。
+ ```js
+  var curtomElastic = d3.easeElastic.period(0.4);
+
+  var te = customElastic(t);
+ ```
