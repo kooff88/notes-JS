@@ -16,3 +16,12 @@
 
 `arc.padRadius`: 设置半径间隔。
 
+## Links
+
+cubic bezier 连接线
+
+`d3.linkHorizontal`: 创建水平连接线。
+
+`link.source`: 起始点。
+
+`link.target`: 结束点。
