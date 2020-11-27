@@ -41,3 +41,20 @@ cubic bezier 连接线
 `line.x`: x轴数据
 
 `line.y`: y轴数据
+
+
+## Pies 饼
+
+`d3.pie`: 创建饼图。
+
+`pie.value` - set the value accessor.
+
+`pie.sort` - set the sort order comparator.
+
+`pie.sortValues` - set the sort order comparator.
+
+`pie.startAngle` - set the overall start angle.
+
+`pie.endAngle` - set the overall end angle.
+
+`pie.padAngle` - set the pad angle between adjacent arcs.
