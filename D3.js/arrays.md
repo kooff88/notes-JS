@@ -2,6 +2,15 @@
 
 数组
 
+## Statistics
+
+`d3.extent`: 获取一个数组的最大值和最小值
+```js
+let arr = [ 3, 5,1, 8,4]
+d3.extend(arr)  // [1, 8]
+
+```
+
 ## Iterables
 
 可迭代的

@@ -1,4 +1,4 @@
-## Scales (d3-scale)
+# Scales (d3-scale)
 
 映射数据 成 图。
 
@@ -6,6 +6,10 @@
 
 `d3.tickFormat`: 格式化 刻度ticks 供使用。
 
+
+### Continuous Scales
+
+`d3.scaleUtc`: 国际标准时间
 
 
 ### 对比
