@@ -31,3 +31,7 @@ function name(selection, first, last) {
 // 式子1 等价于 式子2
 
 ```
+
+## Joining Data
+
+`selection.join`: 根据数据 删除或者添加元素。 
