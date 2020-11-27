@@ -11,3 +11,5 @@
 `d3.forceManyBody`: 多体力，用于模拟引力及静电力。
 
 `d3.forceCenter`: 力图中心点。
+
+`simulation.alphaTarget`: 目标位置。
