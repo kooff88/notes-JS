@@ -16,6 +16,8 @@
 
 `arc.padRadius`: 设置半径间隔。
 
+`arc.centroid`: 取 饼图 或环形图中心点 
+
 ## Links
 
 cubic bezier 连接线
