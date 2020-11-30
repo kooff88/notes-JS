@@ -28,3 +28,5 @@ d3.extend(arr)  // [1, 8]
 `d3.reverse` - reverse the order of values.
 
 `d3.sort` - sort values.
+
+`d3.mean`: 取平均值。
