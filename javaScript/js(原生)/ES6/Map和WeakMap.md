@@ -19,6 +19,21 @@ ES6中Map相对于Object对象有几个区别：
 
 ```
 
+```js
+	let myMap = new Map([
+		[101, "101212"],
+		[102,"123123"],
+		[104,"qweqweq"]
+	]);
+
+	myMap.set(1000, "大鹏牛B");
+
+	let temp = myMap.get(101); // 101212
+	let temp1 = myMap.get(1000); // 大鹏牛B
+
+```
+
+
 Map实例的属性
 ```
 map.size 长度
