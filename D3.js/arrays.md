@@ -61,7 +61,52 @@ let temp = d3.group(athletes, d => d.sport);
 		1:...
 		2:...
 	}
+*/
+
+ console.log('Basketball',  temp.get("Basketball"))
+/**
+	[
+		{name: "LeBron James", sport: "Basketball", nation: "United States", earnings: 85.5},
+		{name: "Stephen Curry", sport: "Basketball", nation: "United States", earnings: 76.9}
+	]
 */ 
+
+
+
+let temp1 = d3.group(athletes, d => d.nation, d=> d.sport);
+/**
+	temp1 = Map{
+		[
+			{
+				key: "United States",
+				value:Map{
+					[
+						{
+							"key":"Boxing",
+							value:[
+								{name: "Floyd Mayweather", sport: "Boxing", nation: "United States", earnings: 285}
+							]
+						},
+							{
+							"key":"Basketball",
+							value:[
+								{name: "LeBron James", sport: "Basketball", nation: "United States", earnings: 85.5},
+								{name: "Stephen Curry", sport: "Basketball", nation: "United States", earnings: 76.9}
+							]
+						},
+						...
+					]
+				}
+			},
+			...
+		]
+	}
+*/
+
+console.log('mation', temp.get("United States").get("Boxing"));
+//  [{earnings: 285,name: "Floyd Mayweather",nation: "United States",sport: "Boxing"}]
+
+
 
 
 ```
