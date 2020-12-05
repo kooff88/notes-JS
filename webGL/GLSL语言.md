@@ -570,3 +570,34 @@ gl.uniform4f(lightColor, 1.0, 0.0, 1.0,0.7);
 
 
 ```
+
+
+### 预处理
+
+WebGL着色器语言和C语言一样提供了一些用于预处理的命令#define、#include、#if等以#号开头的命令。
+
+宏定义#define
+
+```
+#define PI 3.14//圆周率
+#define RECIPROCAL_PI 0.318//圆周率倒数
+float add(){
+  float f = PI*100.0;//预处理的时候会把PI符号自动替换为3.14
+  return f;
+}
+
+// 翻译
+float add(){
+  float f = 3.14*100.0;//预处理的时候会把PI符号自动替换为3.14
+  return f;
+}
+```
+引入文件 #include
+
+```
+#include <common>
+#include <color>
+void main(){
+  gl_FragColor = vec4(color,a);
+}
+```
