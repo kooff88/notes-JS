@@ -11,3 +11,16 @@
 
 
 `d3.nice`: 改变函数的domain, 能自动把 0.00000000000001 变为最接近它的 0 ， 9.999999991 变为最接近它的 10 
+
+`selection.transition `: 给一个选中的元素设置一个过渡。
+
+`transition.duration`: 过渡状态持续时间。
+
+`transition.delay`: 延迟 一定时间 后执行。
+
+`d3.ease` : 扭曲时间控制动画中的运动的方法，是动画过渡更加平滑。
+ ```js
+  var curtomElastic = d3.easeElastic.period(0.4);
+
+  var te = customElastic(t);
+ ```
