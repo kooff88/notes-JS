@@ -515,3 +515,58 @@ vec3 a = vec3(1.0, 2.0, 3.0) * 2;
 ```
 
 GLSL 中函数递归是不被允许的，其行为是未定义的。
+
+
+### 数组
+
+WebGL着色器和javascript语言、C语言一样 可以声明数组类型变量，不过WebGL着色器的数据仅仅支持`一维`数组，不支持多维数组。
+
+```js
+// 声明一个数组变量fArr，数组变量fArr有100个元素，元素的数据类型是浮点数
+float arr[100];
+// 声明一个长度20的三维向量数组变量v3Arr
+vec3 v3Arr[20];
+
+// ----------------------------------------------------------
+
+gl_Position =vec4(arr[1],0.0,0.0,1.0)
+
+// -----------------------------------------------------------
+
+//WebGL顶点或片元着色器的数组变量需要传递数据，声明数组变量的时候，需要使用关键词uniform。
+uniform float arr[12];
+// 传递数组的某个元素  一次传递一个
+var arr0 = gl.getUniformLocation(program, "arr[0]")
+// 传递数组第1个元素的值
+gl.uniform1f(arr0, 0.3);
+var arr1 = gl.getUniformLocation(program, "arr[1]")
+// 传递数组第2个元素的值
+gl.uniform1f(arr1, -0.3);
+
+// 批量传递数组元素值
+var arr =gl.getUniformLocation(program, "arr")
+var typeArr = new Float32Array([
+  0.6,-0.3,0.6,0.4,
+  -0.8,-0.3,0.6,0.4,
+  0.7,0.7,0.6,0.99,
+])
+gl.uniform1fv(, typeArr);
+
+
+// -----------------------------------------------------------
+//结构体声明数组元素
+// 自定义一个方向光结构体
+struct DirectionalLight {
+  vec3 direction;//光的方向
+  vec4 color;//光的颜色
+};
+// 声明一个数组变量dirLight，可以存入3个方向光元素
+// DirectionalLight声明数组元素的数据类型
+uniform DirectionalLight dirLight[3];
+
+// 通过WebGL API给数组中第二个方向光的颜色成员传递值
+var lightColor = gl.getUniformLocation(program,'dirLight[1].color');
+gl.uniform4f(lightColor, 1.0, 0.0, 1.0,0.7);
+
+
+```
