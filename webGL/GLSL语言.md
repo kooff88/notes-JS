@@ -400,6 +400,39 @@ if( color.a < 0.9 )
 discard;
 ```
 
+```js
+    <!-- 顶点着色器源码 -->
+<script id="vertexShader" type="x-shader/x-vertex">
+  //attribute声明vec4类型变量apos
+  attribute vec4 apos;
+  void main() {
+    //点渲染的方形区域像素大小
+    gl_PointSize = 100.0;
+    //顶点坐标apos赋值给内置变量gl_Position
+    //逐顶点处理数据
+    gl_Position = apos;
+  }
+
+</script>
+<!-- 片元着色器源码 -->
+<script id="fragmentShader" type="x-shader/x-fragment">
+  precision lowp float;// 所有float类型数据的精度是lowp
+  void main() {
+    // 计算方形区域每个片元距离方形几何中心的距离
+    // gl.POINTS模式点渲染的方形区域,方形中心是0.5,0.5,左上角是坐标原点,右下角是1.0,1.0，
+    float r = distance(gl_PointCoord, vec2(0.5, 0.5));
+    //根据距离设置片元
+    if(r > 0.5){
+      // 距离方形中心距离大于0.5的片元剪裁舍弃掉
+      discard;
+    }
+    gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+  }
+
+</script>
+
+```
+
 #### 函数
 
 在每个 shader 中必须有一个 main 函数。 main 函数中的 void 参数是可选的，但返回值是 void 是必须的。
