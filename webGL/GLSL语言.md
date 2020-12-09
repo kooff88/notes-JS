@@ -400,6 +400,39 @@ if( color.a < 0.9 )
 discard;
 ```
 
+```js
+    <!-- 顶点着色器源码 -->
+<script id="vertexShader" type="x-shader/x-vertex">
+  //attribute声明vec4类型变量apos
+  attribute vec4 apos;
+  void main() {
+    //点渲染的方形区域像素大小
+    gl_PointSize = 100.0;
+    //顶点坐标apos赋值给内置变量gl_Position
+    //逐顶点处理数据
+    gl_Position = apos;
+  }
+
+</script>
+<!-- 片元着色器源码 -->
+<script id="fragmentShader" type="x-shader/x-fragment">
+  precision lowp float;// 所有float类型数据的精度是lowp
+  void main() {
+    // 计算方形区域每个片元距离方形几何中心的距离
+    // gl.POINTS模式点渲染的方形区域,方形中心是0.5,0.5,左上角是坐标原点,右下角是1.0,1.0，
+    float r = distance(gl_PointCoord, vec2(0.5, 0.5));
+    //根据距离设置片元
+    if(r > 0.5){
+      // 距离方形中心距离大于0.5的片元剪裁舍弃掉
+      discard;
+    }
+    gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+  }
+
+</script>
+
+```
+
 #### 函数
 
 在每个 shader 中必须有一个 main 函数。 main 函数中的 void 参数是可选的，但返回值是 void 是必须的。
@@ -482,3 +515,89 @@ vec3 a = vec3(1.0, 2.0, 3.0) * 2;
 ```
 
 GLSL 中函数递归是不被允许的，其行为是未定义的。
+
+
+### 数组
+
+WebGL着色器和javascript语言、C语言一样 可以声明数组类型变量，不过WebGL着色器的数据仅仅支持`一维`数组，不支持多维数组。
+
+```js
+// 声明一个数组变量fArr，数组变量fArr有100个元素，元素的数据类型是浮点数
+float arr[100];
+// 声明一个长度20的三维向量数组变量v3Arr
+vec3 v3Arr[20];
+
+// ----------------------------------------------------------
+
+gl_Position =vec4(arr[1],0.0,0.0,1.0)
+
+// -----------------------------------------------------------
+
+//WebGL顶点或片元着色器的数组变量需要传递数据，声明数组变量的时候，需要使用关键词uniform。
+uniform float arr[12];
+// 传递数组的某个元素  一次传递一个
+var arr0 = gl.getUniformLocation(program, "arr[0]")
+// 传递数组第1个元素的值
+gl.uniform1f(arr0, 0.3);
+var arr1 = gl.getUniformLocation(program, "arr[1]")
+// 传递数组第2个元素的值
+gl.uniform1f(arr1, -0.3);
+
+// 批量传递数组元素值
+var arr =gl.getUniformLocation(program, "arr")
+var typeArr = new Float32Array([
+  0.6,-0.3,0.6,0.4,
+  -0.8,-0.3,0.6,0.4,
+  0.7,0.7,0.6,0.99,
+])
+gl.uniform1fv(, typeArr);
+
+
+// -----------------------------------------------------------
+//结构体声明数组元素
+// 自定义一个方向光结构体
+struct DirectionalLight {
+  vec3 direction;//光的方向
+  vec4 color;//光的颜色
+};
+// 声明一个数组变量dirLight，可以存入3个方向光元素
+// DirectionalLight声明数组元素的数据类型
+uniform DirectionalLight dirLight[3];
+
+// 通过WebGL API给数组中第二个方向光的颜色成员传递值
+var lightColor = gl.getUniformLocation(program,'dirLight[1].color');
+gl.uniform4f(lightColor, 1.0, 0.0, 1.0,0.7);
+
+
+```
+
+
+### 预处理
+
+WebGL着色器语言和C语言一样提供了一些用于预处理的命令#define、#include、#if等以#号开头的命令。
+
+宏定义#define
+
+```
+#define PI 3.14//圆周率
+#define RECIPROCAL_PI 0.318//圆周率倒数
+float add(){
+  float f = PI*100.0;//预处理的时候会把PI符号自动替换为3.14
+  return f;
+}
+
+// 翻译
+float add(){
+  float f = 3.14*100.0;//预处理的时候会把PI符号自动替换为3.14
+  return f;
+}
+```
+引入文件 #include
+
+```
+#include <common>
+#include <color>
+void main(){
+  gl_FragColor = vec4(color,a);
+}
+```
