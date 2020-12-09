@@ -15,6 +15,16 @@
 `slection.data`: 将数据组合与选择的元素结合(集合操作)
 
 `selection.call`: 将当前选择结点传入 某方法中。
+
+`selection.raise`: 每个选中的元素，添加到父元素末尾。和下面相同。
+```js
+  selection.each(function(){
+    this.parentNode.appendChild(this);
+  })
+
+```
+
+
 ```js
 function name(selection, first, last) {
   selection
@@ -35,3 +45,5 @@ function name(selection, first, last) {
 ## Joining Data
 
 `selection.join`: 根据数据 删除或者添加元素。 
+
+
