@@ -1,6 +1,6 @@
 # Voronoi Diagrams (d3-delaunay)
 
-泰森多边形法图(有道翻译)
+泰森多边形 / 冯洛诺伊图(Voronoi diagram)
 
 `delaunay.from` :
 const delaunay = Delaunay.from([[0, 0], [0, 1], [1, 0], [1, 1]]);
@@ -11,3 +11,4 @@ const delaunay = Delaunay.from([[0, 0], [0, 1], [1, 0], [1, 1]]);
 
 `voronoi.renderCells`: 渲染细胞图形
 
+`voronoi.polygons`: 定义voronoi的多边形
