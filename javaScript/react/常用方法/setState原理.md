@@ -29,7 +29,7 @@ class App extends Component {
 
 结果： 
 
-![1](./1.jpg)
+![1](1.jpg)
 
 组件渲染的结果是1，并且在控制台中输出了100次0，说明每个循环中，拿到的state仍然是更新之前的。
 
@@ -73,7 +73,7 @@ export default Test;
 
 结果： 
 
-![2](./2.jpg)
+![2](2.jpg)
 
 
 
