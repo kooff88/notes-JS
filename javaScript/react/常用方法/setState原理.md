@@ -29,7 +29,7 @@ class App extends Component {
 
 结果： 
 
-![setState1](../image/setState1.jpg)
+<img src="./setState1.jpg" alt=""/>
 
 组件渲染的结果是1，并且在控制台中输出了100次0，说明每个循环中，拿到的state仍然是更新之前的。
 
@@ -73,8 +73,7 @@ export default Test;
 
 结果： 
 
-![setState2](../image/setState2.jpg)
-
+<img src="./setState2.jpg" alt=""/>
 
 
 ### 实现以下两个功能：
