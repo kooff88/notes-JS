@@ -139,3 +139,34 @@ function App() {
 ```
 
 当然这个 Router 功能不多，不过这就是 Vue Router 和 React Router 的思想，他们是基于此来开发更多的功能而已。
+
+
+### 重构
+
+使用了 React Router 之后代码就可以精简成下面这样了。
+
+```js
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+function Login() {
+  return <div>Register</div>;
+}
+
+function Register() {
+  return <div>Login</div>;
+}
+
+function App() {
+  return (
+    <Router>
+        <div className="App">
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+
+            <Route path="/login" component={Login}></Route>
+            <Route path="/register" component={Register}></Route>
+        </div>
+    </Router>
+  );
+}
+```
