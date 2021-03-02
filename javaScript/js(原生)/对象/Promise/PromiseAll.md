@@ -49,5 +49,6 @@ Promise.prototype.all = function(promises){
 	})
 }
 
-
 ```
+
+Promise.all 返回的是数组
