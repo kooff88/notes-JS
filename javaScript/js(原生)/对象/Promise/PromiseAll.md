@@ -52,3 +52,26 @@ Promise.prototype.all = function(promises){
 ```
 
 Promise.all 返回的是数组
+
+###  Promise.race 
+
+race 有赛跑之译，因此返回的新实例状态，是跟随参数中最先改变状态的那个实例；如果不是Promise实例，依旧先用Promise.resolve方法，  
+转化后再进一步处理。  如果传的迭代为空则返回的是Promise 永远等待
+
+```js
+var promise1 = new Promise(function(resolve, reject) {
+	setTimeout( resolve, 500, 'one-resolve-500' );
+})
+
+var promise1 = new Promise(function(resolve, reject) {
+	setTimeout( resolve, 400, 'one-resolve-400' );
+})
+
+Promise.race([promise1, promise2]).then(function(value) {
+  console.log(value);
+}, function(err) {
+    console.log(err);
+})
+
+
+```
