@@ -35,3 +35,79 @@ useMemo: 如果在组件有个变量的值需要大量的计算才可以得出�
 
 注：删除新建移动的操作都只是先做标记。
 ```
+
+### react-router 原理
+
+hash 路由： 核心是 监听了 load 和 onHashChange 事件， 在页面刷新或者URL hash 改变时渲染不同页面组件。  
+history API路由： 核心是通过 replaceState 和 pushState 去改变页面 URL，通过 popState 事件监听history 随想改变的时候改变页面。  
+
+### react-redux 
+
+Redux 是 JavaScript 状态容器， 能提供可预测化的状态管理。需要它的原因是因为前端有大量无规律的交互和异步操作， 而且随着代码量越来越大，  
+我们要维护的状态也越来越多。它能提供的就是让每个  State 变化可预测， 动作与状态统一管理。 
+
+### connect 原理
+
+connent 方法是一个高阶组件，主要的两个参数都是函数， 命名为 mapStateToProps 和 mapDispatchToProps, 内部原理是获取 store 添加订阅后，  
+将 state 和 dispatch 分别传入上面两个方法，返回需要的 state 和 改变 state 的方法 添加到 UI组件的props上。
+
+前提是在 应用层已经使用 provider 组件，并应用初始化时创建 store。
+
+### 中间件原理
+
+中间件可以说是 dispatch 的增强或者替换。
+
+applyMiddleware([middleware]) 返回的是一个函数， createStore 内部会使用这个函数的调用结果（参数为createStore）创建store。
+
+```js
+// 一个简单的中间件规范， next 可以理解成 dispatch
+
+const middleware = store => next => action => {
+	// 一些操作
+	next(action);
+	// 一些操作
+}
+
+// const aa = (store) => {
+// 	return 	function next(action) {
+		
+// 	}
+// }
+
+const applyMiddleware = function ( ...middlewares ) {
+	return function rewriteCreateStoreFunc( oldCreateStore ){
+		return function newCreateStore( reducer, initState ) {
+			const store = oldCreateStore( reducer, initState );
+			const chain = middlewares.map(middleware => middleware(store));
+			let dispatch = store.dispatch;
+			chain.reverse().map( middleware => {
+				dispatch = middleware(dispatch);
+			})
+			// 多个中间件的情况相当于 dispatch = middleware1( middleware2( middleware3( dispatch)));
+			// middleware1 内执行包含 middleware2 操作的 dispatch, middleware2 内执行包含middleware3 操作的 dispatch
+			// 所以中间件顺序是从左到右
+
+		  store.dispatch = dispatch;
+      return store;
+		}
+	}
+}
+
+const store = createStore( reducer, initState, applyMiddleware( middleware));
+
+```
+
+redux 是 通过compose 函数也做到 [ A, B, C ] 转换成 A(B(C(next)))
+
+```js
+// 结合上面代码
+dispatch = compose(...chain)( store.dispatch);
+
+export default function compose(...funcs){
+	if (funcs.length === 1) {
+		return funcs[0];
+	}
+	return funcs.reduce((a,b) => (...args) => a(b(...args)));
+}
+
+```
