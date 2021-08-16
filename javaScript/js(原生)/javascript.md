@@ -1,5 +1,7 @@
 ## 目录  
 
+### JavaScript 是一门单线程语言，异步操作都是放到事件循环队列里面，等待主执行栈来执行的，并没有专门的异步执行线程。
+
 - [Promise(es6)](#Promise(es6))
 - [Promise.all](#Promise.all)
 - [js 小写字符串转换为大写字母](#js 小写字符串转换为大写字母)
@@ -218,7 +220,7 @@ case穿透就是从条件语句符合的case开始执行，直到读取到break�
 ## generator函数
 
 
-```
+```js
   function* countAppSales(){
     var saleList = [3,7,5];
     for (var i=0; i <saleList.length; i++) {
@@ -234,6 +236,18 @@ case穿透就是从条件语句符合的case开始执行，直到读取到break�
   appleStore.next();     //  { value: undefined, done: true }
 
 ```
+
+第一次调用next 方法时， 从 Generator 函数的头部开始执行，显示打印了one, 执行到 yield 就停下来， 并将后面表达式的值"1",  
+作为返回对象的value属性值， 此时函数还没有执行完， 返回对象的done 属性值是false;
+
+第二次调用next 方法时，同上步。
+
+第三次调用 next 方法时，先是打印 three , 然后执行了 函数的返回操作，并将return 后面的表达式的值， 作为返回对象的 value  
+属性值， 此时函数已经结束， 多以done 属性值为 true。 
+
+第四次调用 next 方法时， 此时函数已经执行完了，所以返回 value 属性值是 undefined ，done 属性值是 true 。  
+如果执行第三步时，没有 return 语句的话，就直接返回 {value: undefined, done: true}。
+
 
 ## Object.entries()
 

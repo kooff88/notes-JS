@@ -1,6 +1,6 @@
 ## react-hooks-redux 使用
 
-```
+```js
 import React from "react";
 import ReactHooksRedux from "react-hooks-redux";
 

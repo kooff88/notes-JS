@@ -41,7 +41,7 @@
 
 例二:  
 
-```html
+```js
 	var Pet = {
 		words : '...',
 		speak : function (say){
@@ -85,7 +85,7 @@
 ```
 
 例二：
-```html
+```js
 	function Pet(words){
 		this.words = words;
 		this.speak = function (){
@@ -171,7 +171,7 @@
 
 ## 将参数转为一个数组
 
-```
+```js
 	function test(){
 		// 将参数转为一个数组
 		var args = Array.prototype.slice.apply(arguments);
@@ -184,14 +184,14 @@
 
 ## 获取数组最大值
 
-```
+```js
 var values = [1,2,3,8,6,4,3,6,9,0];
 
 var max = Math.max.apply(Math, values);
 
 console.log(max) // 9
 
-...这个技巧的关键是把Math对象作为apply()的第一个参数，从而正确的设置this值
+// ...这个技巧的关键是把Math对象作为apply()的第一个参数，从而正确的设置this值
 
 ```
 
