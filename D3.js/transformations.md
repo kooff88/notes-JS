@@ -20,7 +20,7 @@
 
 `d3.ease` : 扭曲时间控制动画中的运动的方法，是动画过渡更加平滑。
  ```js
-  var curtomElastic = d3.easeElastic.period(0.4);
+  var curtomElastic = d3.easeElastic.period(0.4);it s
 
   var te = customElastic(t);
  ```
