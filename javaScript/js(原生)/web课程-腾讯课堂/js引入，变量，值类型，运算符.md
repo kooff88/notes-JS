@@ -27,3 +27,20 @@
 array Object function  date RegExp
 
 ```
+
+
+### 运算符
+
+```
+
+a ++  等同于  a = a + 1
+
+var a = 10;
+document.write(a ++); 10
+先打印 write。 再++ 
+
+document.write(++a); 11
+先++, 再打印 write。 
+
+
+```
