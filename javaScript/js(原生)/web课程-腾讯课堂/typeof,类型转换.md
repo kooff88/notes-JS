@@ -47,3 +47,20 @@ var a = "a" * 1;  // NaN
 undefined === null  // true
 
 ```
+
+
+```js
+function myIsNaN(num){
+  
+  var ret = Number(num);
+  ret += "";
+  if (ret == "NaN"){
+    return true;
+  }else {
+    return false;
+  }
+
+}
+
+
+```
