@@ -94,3 +94,108 @@ Element.prototype.insertAfter = function( targetNode, afterNode ) {
 
 
 ```
+
+```js
+
+// 获取 滚动条 距离
+function getScrollOffset(){
+  
+  if ( window.pageXOffset ) {
+    return {
+      x: window.pageXOffset,
+      y: window.pageYOffset
+    }
+  }else {
+    return {
+      x: document.body.scrollLeft + document.documentElement.scrollLeft,
+      y: document.body.scrollTop + document.documentElement.Top,
+
+    }
+  }
+}
+
+```
+
+
+```js
+// 可视区域 宽高
+function getViewportOffset(){
+  if ( window.innerWidth ) {
+    return {
+      w: window.innerWidth,
+      h: window.innerHeight
+    }
+  }else {
+    if ( document.compatMode === 'BackCompat' ) {
+      return {
+        w: document.body.clientWidth,
+        h: document.body.clientHeight
+      }
+    }else {
+      return {
+        w: document.documentElement.clientWidth,
+        h: document.documentElement.clientHeight
+      }
+    }
+  }
+}
+
+
+```
+
+
+```js
+
+div.getBoundingClientRect();
+
+
+
+```
+
+
+```js
+
+// scroll()   scrollTo()   scrollBy()
+
+// 自动阅读
+<div>内容。。。</div>
+<div>start</div>
+
+var start = document.getElementsByTagName('div')[1];
+
+start.onclick = function(){
+
+  clearInterval(timer);
+  let timer = setInterval( function(){
+    window.scrollBy(0, 10)
+  }, 100);
+
+}
+
+
+
+```
+
+
+```js
+
+<div>start</div>
+
+window.getComputedStyle(div, null) // 获取最终展示样式，权重最高的
+
+// 获取伪元素
+window.getComputedStyle(div,'after').width;
+
+// 获取样式方法， 兼容ie
+function getStyle(elem, prop){
+  if ( window.getComputedStyle ) {
+    return window.getComputedStyle( elem, null )[prop];
+  }else {
+    return ele.currentStyle[prop];
+  }
+}
+
+
+
+
+```
