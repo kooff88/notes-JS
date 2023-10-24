@@ -134,7 +134,7 @@ js加载时间线
 
 8. document对象触发DOMContentLoaded事件, 这也标志着程序执行从同步脚本执行阶段，转化为事件驱动阶段。
 
-9. 当所有async的脚本加载完成并执行后，img等加载完成后，document.readState = 'complete',window对象触发事件load
+9. 当所有async的脚本加载完成并执行后，img等加载完成后，document.readState = 'completed',window对象触发事件load
 
 10. 从此，以异步响应方式处理用户输入，网络事件等。
 
