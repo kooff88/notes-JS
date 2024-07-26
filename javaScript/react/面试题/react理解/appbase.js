@@ -9,19 +9,69 @@ let counterName = 'One';
 root.render(<App />);
 
 class CounterObj {
-  constructor(name, show, total) {
+  constructor(name, show, total, id, tab) {
     this.name = name;
     this.show = show;
     this.total = total;
+    this.id = id;
+    this.tab = tab;
   }
 }
 
-const counterData = [
-  new CounterObj('A', true, 0),
-  new CounterObj('B', true, 0),
-  new CounterObj('C', true, 0),
-]
+// const counterData = [
+//   new CounterObj('A', true, 0, 1),
+//   new CounterObj('B', true, 0, 2),
+//   new CounterObj('C', true, 0, 3),
+// ]
 
+
+
+function counterReducer(counterData, action) {
+  switch (action.type) {
+    case 'increment': {
+      return counterData.map((counter) => {
+        if (counter.id === action.id) {
+          return { ...counter, total: counter.total + 1 }
+        } else {
+          return counter;
+        }
+      })
+    }
+    case 'decrement': {
+      return counterData.map((counter) => {
+        if (counter.id === action.id) {
+          return { ...counter, total: counter.total - 1 }
+        } else {
+          return counter;
+        }
+      })
+    }
+    default: {
+      throw Error('Unknown action: ' + action.type);
+    }
+  }
+}
+
+function tabReducer(visibleTab, action) {
+  console.log('action-<action', action);
+  switch (action.type) {
+    case 'change-tab': {
+      if (action.tab === visibleTab) {
+        return visibleTab;
+      } else {
+        return action.tab;
+      }
+    }
+    default: {
+      throw Error('Unknown action: ' + action.type);
+    }
+  }
+}
+
+const CounterContext = React.createContext(null);
+const CounterDispatchContext = React.createContext(null);
+const TabContext = React.createContext(null);
+const TabDispatchContext = React.createContext(null);
 
 async function fetchBio(person) {
   const delay = person === 'Bob' ? 2000 : 200;
@@ -34,48 +84,12 @@ async function fetchBio(person) {
 
 }
 
+// const CounterContext = React.createContext(3);
 
 function App() {
-  // const counterOne = <Counter name={counterName} />
-  // const counterTwo = <Counter2 name={counterName} />
-  // const [person, setPerson] = React.useState('Alice');
-  // const [bio, setBio] = React.useState(null);
 
-  // React.useEffect(() => {
-  //   let ignore = false;
-  //   setBio(null);
-  //   fetchBio(person).then(result => {
-  //     if (!ignore) {
-  //       setBio(result);
-  //     }
-  //   })
-
-  //   return () => {
-  //     ignore = true;
-  //   }
-
-  // }, [person])
-
-
-  // return (
-  //   <>
-  //     <select value={person} onChange={e => {
-  //       setPerson(e.target.value)
-  //     }}>
-  //       <option value="Alice">Alice</option>
-  //       <option value="Bob">Bob</option>
-  //       <option value="Taylor">Taylor</option>
-  //     </select>
-  //     < hr />
-  //     <p> <i>{bio ?? 'Loading...'}</i> </p>
-  //     {/* 如果bio是有值，否则展示loadinging */}
-  //   </>
-  // )
 
   const [swapCounter, setSwapCounter] = React.useState(false);
-
-
-
 
   function handleClick() {
     setSwapCounter(!swapCounter);
@@ -90,57 +104,67 @@ function App() {
     counterOne = <Counter2 name="One" />
   }
 
-  const [counterData, setCounterData] = React.useState([
-    new CounterObj('A', true, 0),
-    new CounterObj('B', true, 0),
-    new CounterObj('C', true, 0),
+  const [counterData, counterDispatch] = React.useReducer(counterReducer, [
+    new CounterObj('A', true, 0, 1, 1),
+    new CounterObj('B', true, 0, 2, 2),
+    new CounterObj('C', true, 0, 3, 1),
   ])
 
-  const increment = (index) => {
-    const newData = [...counterData];
-    newData[index].total = newData[index].total + 1;
-    setCounterData(newData);
-  }
+  const [visibleTab, tabDispatch] = React.useReducer(tabReducer, 1);
 
-  const decrement = (index) => {
-    const newData = [...counterData];
-    const decrementedCounter = newData[index].total - 1;
-    newData[index].total = decrementedCounter >= 0 ? decrementedCounter : 0;
-    setCounterData(newData)
-  }
+
+  // const increment = (index) => {
+  //   const newData = [...counterData];
+  //   newData[index].total = newData[index].total + 1;
+  //   setCounterData(newData);
+  // }
+
+  // const decrement = (index) => {
+  //   const newData = [...counterData];
+  //   const decrementedCounter = newData[index].total - 1;
+  //   newData[index].total = decrementedCounter >= 0 ? decrementedCounter : 0;
+  //   setCounterData(newData)
+  // }
+
+  // const contextData = [counterData, increment, decrement]
 
   return <>
-    <h1>Counters</h1>
-    // <section>
-    //   {/* {counterName === "One" ? counterOne : counterTwo} */}
-    //   {counterOne}
-    // </section>
-    <p>
-      <button className="button" onClick={handleClick}>Swap counters</button>
-    </p>
-    <CounterList counterData={counterData} increment={increment} decrement={decrement} />
-    <CounterSummary counterData={counterData} />
+    <CounterContext.Provider value={counterData}>
+      <CounterDispatchContext.Provider value={counterDispatch}>
+        <TabContext.Provider value={visibleTab}>
+          <TabDispatchContext.Provider value={tabDispatch}>
+            <h1>Counters</h1>
+            <section>
+              {counterOne}
+            </section>
+            <p>
+              <button className="button" onClick={handleClick}>Swap counters</button>
+            </p>
+            <CounterList />
+            <CounterTools />
+          </TabDispatchContext.Provider>
+        </TabContext.Provider>
+      </CounterDispatchContext.Provider>
+    </CounterContext.Provider>
+
   </>
 }
 
 
-function CounterList({ counterData, increment, decrement }) {
+function CounterList() {
+
+  const counterData = React.useContext(CounterContext);
+
   return (
     <section>
-      {counterData.map((counter, index) => (
-        <Counter counter={counter} index={index} increment={increment} decrement={decrement} />
-      ))}
+      {counterData.map((counter, index) => {
+        return (
+          <Counter key={counter.id} counter={counter} />
+        )
+      })}
     </section>
   )
 }
-
-// function Counter() {
-//   return React.createElement("article", null,
-//     React.createElement("h2", null, "Counter"),
-//     React.createElement("p", null, "You clicked 1 times"),
-//     React.createElement("button", { className: 'button' }, "Click me"),
-//   )
-// }
 
 function useDocumentTitle(title) {
   return React.useEffect(() => {
@@ -167,53 +191,43 @@ function useCounter() {
 
 }
 
-function Counter({ counter, index, increment, decrement }) {
+function Counter({ counter, index }) {
 
   // const [counter, incrementCounter] = useCounter();
 
-  const updateTitle = useDocumentTitle('Clicks: ' + counter.total)
+  const counterDispatch = React.useContext(CounterDispatchContext);
 
-  // React.useEffect(() => {
-  //   const originalTitle = document.title;
-  //   document.title = "Clicks: " + numOfClicks.total;;
-  // }, [numOfClicks.total])
+  const id = React.useId();
 
-  // const numOfClicksRef = React.useRef({ total: 0 })
-
-  function handleClick() {
-    // numOfClicks.total = numOfClicks.total + 1;
-    // alert(`you've clicked ${numOfClicks.total} times`)
-    // setNumOfClicks({ ...numOfClicks, total: numOfClicks.total + 1 })
-    incrementCounter();
-  }
-
-
-
-  function handleClickWrong() {
-    numOfClicks.total = numOfClicks.total + 1;
-    setNumOfClicks(numOfClicks)
-  }
 
   // function handleClick() {
   //   setNumOfClicks({ ...numOfClicks, total: numOfClicks.total + 1 })
   // }
 
-  function handleIncrementClick() {
-    increment(index)
+  function handleIncrementClick(event) {
+    counterDispatch({ type: 'increment', id: counter.id });
+    // increment(index);
+    event.preventDefault();
   }
 
-  function handleDecrementClick() {
-    decrement(index);
+  function handleDecrementClick(event) {
+    counterDispatch({ type: 'decrement', id: counter.id });
+    // decrement(index);
+    event.preventDefault();
   }
 
-  return <artical>
-    <h2>Counter {counter.name}</h2>
-    <p>you clicked {counter.total} times</p>
-    {/* <button className="button" onClick={handleClickWrong}>Click me</button> */}
-    {/* <button className="button" onClick={handleClick}>Click me</button> */}
-    <button className="button" onClick={handleDecrementClick}> - </button>
-    <button className="button" onClick={handleIncrementClick}> + </button>
-  </artical>
+  return (
+    <fieldset className="counter" id={id}>
+      <legend className="counter__legend">{counter.name}</legend>
+      <dd className="counter_value">
+        <button className="button" onClick={handleDecrementClick}>-</button>
+        {counter.total}
+        <button className="button" onClick={handleIncrementClick}>+</button>
+      </dd>
+    </fieldset>
+  )
+
+
 }
 
 function Counter2(props) {
@@ -221,25 +235,6 @@ function Counter2(props) {
   const [numOfClicks, setNumOfClicks] = React.useState({
     total: 0
   });
-
-
-  // const [myName, setMyName] = React.useState('Tony');
-  // const [state, dispatch] = React.useReducer(() => {
-
-  // }, "Alicea");
-
-  // const [num, setNum] = React.useState(0);
-
-  // React.useEffect(() => {
-  //   console.log("In Use Effect" + props.name);
-  //   document.title = "Clicks: " + numOfClicks.total;
-
-  //   return () => {
-  //     console.log('Unmounting One' + props.name);
-  //   }
-
-  // }, [])
-
 
   function handleClickWrong() {
     numOfClicks.total = numOfClicks.total + 1;
@@ -259,16 +254,78 @@ function Counter2(props) {
   </artical>
 }
 
-function CounterSummary({ counterData }) {
-
-  const summary = counterData.map((counter) => {
-    return `${counter.name}(${counter.total})`
-  }).join(',')
+function CounterTools() {
 
   return (
-    <p>Summary: {summary}</p>
+    <CounterSummary />
+  )
+
+}
+
+function CounterSummary() {
+
+  // const [contextData, increment, decrement] = React.useContext(CounterContext)
+
+  const counterData = React.useContext(CounterContext);
+
+  const visibleTab = React.useContext(TabContext);
+
+  const tabDispatch = React.useContext(TabDispatchContext);
+
+  console.log('counterDatacounterData================', counterData);
+  // const [visibleTab, setVisibleTab] = React.useState(1);
+
+  // const sortedData = [...counterData].sort((a, b) => {
+  //   return b.total - a.total;
+  // })
+  const filteredSortedData = React.useMemo(() => {
+    return counterData.filter((counter) => {
+      return counter.tab === visibleTab
+    })
+  }, [visibleTab, counterData])
+
+  const setVisibleTab1 = React.useCallback((event) => {
+    // setVisibleTab(1) 
+    tabDispatch({ type: 'change-tab', tab: 1 });
+    event.preventDefault();
+  }, [])
+
+
+  const setVisibleTab2 = React.useCallback((event) => {
+    tabDispatch({ type: 'change-tab', tab: 2 });
+    event.preventDefault();
+  }, [])
+
+  return (
+    <section>
+
+      <CounterSummaryHeader setVisibleTab1={() => setVisibleTab1(1)} setVisibleTab2={() => setVisibleTab2(2)} />
+      {filteredSortedData.map((counter, index) => <CounterSummaryDetail visible={visibleTab} key={counter.id} counter={counter} />)}
+
+    </section>
   )
 }
+
+const CounterSummaryHeader = React.memo(function CounterSummaryHeader({ setVisibleTab1, setVisibleTab2 }) {
+  console.log('CounterSummaryHeader')
+  return (
+    <header>
+      <a href="#" onClick={setVisibleTab1}>Tab 1</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" onClick={setVisibleTab2}>Tab 2</a>
+    </header>
+  )
+})
+
+
+const CounterSummaryDetail = React.memo(function CounterSummaryDetail({ counter, visible }) {
+  if (visible) {
+    return (
+      <p>{counter.name} ({counter.total})</p>
+    )
+  }
+  return null;
+
+})
+
 
 
 // function Counter({ name }) {
