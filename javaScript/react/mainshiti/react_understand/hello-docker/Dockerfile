@@ -1,4 +1,5 @@
 FROM node:latest
 COPY . /app
 WORKDIR /app
-CMD node app.js
+EXPOSE 3000
+CMD ["node", "app.js"]
